@@ -7,6 +7,8 @@ import shutil
 import sys
 import json
 
+from spikeinterface.sorters.utils.misc import get_matlab_path
+
 
 from ..basesorter import BaseSorter
 from ..utils import ShellScript
@@ -206,13 +208,13 @@ class WaveClusSorter(BaseSorter):
                 shell_cmd = f"""
                     {disk_move}
                     cd {sorter_output_folder}
-                    matlab -nosplash -wait -log -r "waveclus_master('{sorter_output_folder}', '{sorter_path}')"
+                    {get_matlab_path()} -nosplash -wait -log -r "waveclus_master('{sorter_output_folder}', '{sorter_path}')"
                 """
             else:
                 shell_cmd = f"""
                     #!/bin/bash
                     cd "{sorter_output_folder}"
-                    matlab -nosplash -nodisplay -log -r "waveclus_master('{sorter_output_folder}', '{sorter_path}')"
+                    {get_matlab_path()} -nosplash -nodisplay -log -r "waveclus_master('{sorter_output_folder}', '{sorter_path}')"
                 """
         shell_cmd = ShellScript(
             shell_cmd,

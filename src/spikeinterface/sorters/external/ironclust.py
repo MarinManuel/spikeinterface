@@ -241,7 +241,7 @@ class IronClustSorter(BaseSorter):
                 shell_cmd = """
                     {disk_move}
                     cd {tmpdir}
-                    matlab -nosplash -wait -log -r run_ironclust
+                    {get_matlab_path()} -nosplash -wait -log -r run_ironclust
                 """.format(
                     disk_move=str(tmpdir)[:2], tmpdir=tmpdir
                 )
@@ -249,7 +249,7 @@ class IronClustSorter(BaseSorter):
                 shell_cmd = """
                     #!/bin/bash
                     cd "{tmpdir}"
-                    matlab -nosplash -nodisplay -log -r run_ironclust
+                    {get_matlab_path()} -nosplash -nodisplay -log -r run_ironclust
                 """.format(
                     tmpdir=tmpdir
                 )

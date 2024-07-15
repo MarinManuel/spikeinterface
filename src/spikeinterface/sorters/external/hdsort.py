@@ -9,6 +9,7 @@ import sys
 import numpy as np
 
 from spikeinterface.core import write_to_h5_dataset_format
+from spikeinterface.sorters.utils.misc import get_matlab_path
 from ..basesorter import BaseSorter
 from ..utils import ShellScript
 
@@ -222,13 +223,13 @@ class HDSortSorter(BaseSorter):
                 shell_cmd = f"""
                             {disk_move}
                             cd {sorter_output_folder}
-                            matlab -nosplash -wait -r "{cls.sorter_name}_master('{sorter_output_folder}', '{hdsort_path}')"
+                            {get_matlab_path()} -nosplash -wait -r "{cls.sorter_name}_master('{sorter_output_folder}', '{hdsort_path}')"
                         """
             else:
                 shell_cmd = f"""
                             #!/bin/bash
                             cd "{sorter_output_folder}"
-                            matlab -nosplash -nodisplay -r "{cls.sorter_name}_master('{sorter_output_folder}', '{hdsort_path}')"
+                            {get_matlab_path()} -nosplash -nodisplay -r "{cls.sorter_name}_master('{sorter_output_folder}', '{hdsort_path}')"
                         """
         shell_script = ShellScript(
             shell_cmd,
