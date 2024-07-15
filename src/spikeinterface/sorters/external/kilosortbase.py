@@ -8,6 +8,8 @@ import sys
 
 import numpy as np
 
+from spikeinterface.sorters.utils.misc import get_matlab_path
+
 from ..utils import ShellScript, get_matlab_shell_name, get_bash_path
 from ..basesorter import get_job_kwargs
 from spikeinterface.extractors import KiloSortSortingExtractor
@@ -183,7 +185,7 @@ class KilosortBase:
                 shell_cmd = f"""
                     {disk_move}
                     cd {sorter_output_folder}
-                    matlab -nosplash -wait -r "{cls.sorter_name}_master('{sorter_output_folder}', '{sorter_path}')"
+                    {get_matlab_path()} -nosplash -wait -r "{cls.sorter_name}_master('{sorter_output_folder}', '{sorter_path}')"
                 """
             else:
                 if get_matlab_shell_name() == "fish":
@@ -202,7 +204,7 @@ class KilosortBase:
                     #!/bin/bash
                     {matlab_shell_str}
                     cd "{sorter_output_folder}"
-                    matlab -nosplash -nodisplay -r "{cls.sorter_name}_master('{sorter_output_folder}', '{sorter_path}')"
+                    {get_matlab_path()} -nosplash -nodisplay -r "{cls.sorter_name}_master('{sorter_output_folder}', '{sorter_path}')"
                 """
         shell_script = ShellScript(
             shell_cmd,

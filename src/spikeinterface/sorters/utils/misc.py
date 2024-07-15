@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 import subprocess  # TODO: decide best format for this
 from subprocess import check_output, CalledProcessError
@@ -152,3 +153,13 @@ def has_spython():
         return True
     except ImportError:
         return False
+
+
+def get_matlab_path():
+    """
+    returns the path of the matlab executable or `matlab`
+    """
+    if 'MATLAB_PATH' in os.environ:
+        return os.environ['MATLAB_PATH']
+    else:
+        return 'matlab'
